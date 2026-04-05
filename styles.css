@@ -1,0 +1,603 @@
+/* Reset & Global */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-dark: #0a0a0a;
+    --text-light: #ffffff;
+    --text-muted: rgba(255, 255, 255, 0.5);
+    --accent: #E5E0D8; /* A creamy off-white for elements */
+    --accent-form: #62303c; /* Match a premium crimson/burgundy form button color if needed, but let's stick to sleek */
+    --font-sans: 'Inter', sans-serif;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    font-family: var(--font-sans);
+    overflow: hidden; /* We handle scrolling inside .slider-container */
+    -webkit-font-smoothing: antialiased;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+}
+
+/* Typography System */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-sans);
+    margin: 0;
+}
+
+/* Uppercase bold premium typography */
+.title-massive {
+    font-weight: 900;
+    font-size: clamp(3rem, 8vw, 8rem);
+    letter-spacing: -0.02em;
+    line-height: 0.85;
+    text-transform: uppercase;
+}
+
+.title-large {
+    font-weight: 900;
+    font-size: clamp(2.5rem, 7.5vw, 7.5rem);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    text-transform: uppercase;
+}
+
+.title-medium {
+    font-weight: 900;
+    font-size: clamp(2.5rem, 6vw, 6rem);
+    letter-spacing: -0.02em;
+    line-height: 0.9;
+    text-transform: uppercase;
+}
+
+p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    font-weight: 400;
+}
+
+.text-muted {
+    color: var(--text-muted);
+}
+
+.uppercase-label {
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+}
+
+.mt-4 { margin-top: 1.5rem; }
+.mt-8 { margin-top: 3rem; }
+.mb-4 { margin-bottom: 1.5rem; }
+
+/* Custom Utilities */
+.whatsapp-icon a {
+    color: gray;
+    transition: color 0.3s;
+}
+
+.whatsapp-icon a:hover {
+    color: #25D366;
+}
+
+/* Noise Overlay */
+.noise-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    pointer-events: none;
+    z-index: 9998;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Navigation & Controls */
+.nav-bar {
+    position: fixed;
+    top: 0; left: 0; width: 100%;
+    padding: 2rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 50;
+}
+
+.logo {
+    font-weight: 900;
+    font-size: 1.25rem;
+    letter-spacing: 0.05em;
+}
+
+.logo a {
+    color: #ffffff;
+    text-decoration: none;
+    transition: opacity 0.3s;
+}
+
+.logo a:hover {
+    opacity: 0.8;
+}
+
+.slider-controls {
+    position: fixed;
+    bottom: 3rem; right: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    z-index: 50;
+}
+
+.slider-controls button {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.2rem;
+    opacity: 0.5;
+    transition: opacity 0.3s;
+}
+
+.slider-controls button:hover {
+    opacity: 1;
+}
+
+/* Full-Page Slider using CSS Scroll Snap */
+.slider-container {
+    height: 100vh;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scrollbar-width: none; /* Firefox */
+}
+.slider-container::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+}
+
+.slide {
+    height: 100vh;
+    width: 100vw;
+    scroll-snap-align: start;
+    box-sizing: border-box;
+    scroll-snap-stop: always;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+/* Slide Backgrounds & Mask Reveal */
+.slide-bg {
+    position: absolute;
+    inset: -10%; /* Extra bleed for massive zooming */
+    z-index: 1;
+    clip-path: inset(10% 10% 10% 10%); /* Starting clip path for the animation */
+}
+
+.slide-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.2); /* Starting scale for the animation */
+}
+
+.solid-bg {
+    background: var(--accent);
+    width: 100%; height: 100%;
+}
+
+.solid-bg-dark {
+    background: var(--bg-dark);
+    width: 100%; height: 100%;
+}
+
+.light-theme {
+    color: #0a0a0a;
+}
+
+.light-theme .mix-difference {
+    color: #0a0a0a;
+}
+
+#slide-6 {
+    padding-top: 6rem;
+}
+
+/* Slide Content Layout */
+.slide-content {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    padding: 0 5%;
+}
+
+.slide-subtext {
+    max-width: 400px;
+    margin-top: 2rem;
+}
+
+.content-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+}
+
+.content-center {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Parallax Collage Elements */
+.parallax-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    pointer-events: none; 
+}
+
+.floating-shape {
+    position: absolute;
+    overflow: hidden;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+}
+
+.floating-shape img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.1);
+}
+
+.shape-pill { border-radius: 999px; }
+.shape-circle { border-radius: 50%; }
+.shape-arch { border-radius: 300px 300px 0 0; }
+
+.abstract-ring {
+    position: absolute;
+    border: 2px solid rgba(255,255,255,0.1);
+    border-radius: 50%;
+}
+
+/* GSAP SplitText styling */
+.split-text {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+}
+
+.split-text .line {
+    overflow: hidden;
+}
+
+.split-text .word {
+    transform: translateY(110%);
+}
+
+.fade-text {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+/* UI Elements */
+.pill-btn {
+    display: inline-flex;
+    justify-content: center;
+    position: relative;
+    padding: 1rem 2.5rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.2);
+    overflow: hidden;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.85rem;
+    transition: color 0.4s;
+}
+
+.pill-btn::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    border-radius: 50% 50% 0 0;
+    transition: top 0.4s, border-radius 0.4s;
+    z-index: -1;
+}
+
+.pill-btn:hover {
+    color: #0a0a0a;
+}
+
+.pill-btn:hover::before {
+    top: 0;
+    border-radius: 0;
+}
+
+.pill-btn.solid-white-btn {
+    background: #ffffff;
+    color: #0a0a0a;
+    font-weight: 700;
+    border: none;
+}
+
+.pill-btn.solid-white-btn::before {
+    background: #0a0a0a;
+}
+
+.pill-btn.solid-white-btn:hover {
+    color: #ffffff;
+}
+
+.pill-btn.submit-btn {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #fff;
+}
+.pill-btn.submit-btn:hover {
+    color: #000;
+}
+
+/* Specific Section Layouts */
+.services-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    max-width: 600px;
+}
+
+.service-item {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+}
+
+.service-item .num {
+    font-size: 1rem;
+    font-weight: 400;
+    opacity: 0.5;
+}
+
+.steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+}
+
+.step-card {
+    background: rgba(0,0,0,0.3);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 2.5rem;
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 1.5rem;
+}
+
+.step-line {
+    width: 40px; height: 2px;
+    background: var(--text-light);
+    margin-bottom: 2rem;
+}
+
+.step-card h4 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.split-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+}
+
+/* Form Styles mimicking layout */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+}
+
+.form-group input, 
+.form-group select, 
+.form-group textarea {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 4px;
+    padding: 0.6rem 1rem;
+    color: #fff;
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.3s, background 0.3s;
+}
+
+.form-group input:focus, 
+.form-group select:focus, 
+.form-group textarea:focus {
+    border-color: rgba(255,255,255,0.5);
+    background: rgba(255,255,255,0.05);
+}
+
+.form-group select {
+    appearance: none;
+    cursor: none;
+}
+
+.form-group select option {
+    background: #111;
+    color: #fff;
+}
+
+.footer {
+    position: absolute;
+    bottom: 2rem;
+    left: 5%;
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.socials {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.socials a {
+    color: var(--text-muted);
+    transition: color 0.3s ease, transform 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+
+.socials a:hover {
+    color: var(--text-light);
+    transform: translateY(-2px);
+}
+
+.hover-link {
+    display: inline-block;
+    position: relative;
+    font-size: 1.2rem;
+}
+
+.hover-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px; left: 0; width: 0%; height: 1px;
+    background: #fff;
+    transition: width 0.3s;
+}
+
+.hover-link:hover::after { width: 100%; }
+
+/* Liquid Glass Button */
+.liquid-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    padding: 1.25rem 2.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #fff;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    transition: transform 0.3s;
+    outline: none;
+}
+.liquid-btn:hover {
+    transform: scale(1.05);
+}
+.liquid-shadow {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    border-radius: 9999px;
+    z-index: 0;
+    box-shadow: 0 0 6px rgba(0,0,0,0.03),0 2px 6px rgba(0,0,0,0.08),inset 3px 3px 0.5px -3px rgba(0,0,0,0.9),inset -3px -3px 0.5px -3px rgba(0,0,0,0.85),inset 1px 1px 1px -0.5px rgba(0,0,0,0.6),inset -1px -1px 1px -0.5px rgba(0,0,0,0.6),inset 0 0 6px 6px rgba(0,0,0,0.12),inset 0 0 2px 2px rgba(0,0,0,0.06),0 0 12px rgba(255,255,255,0.15);
+    transition: all 0.3s;
+}
+.liquid-glass {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: -10;
+    border-radius: 9999px;
+    backdrop-filter: url("#container-glass");
+    -webkit-backdrop-filter: url("#container-glass");
+    overflow: hidden;
+}
+.liquid-btn span {
+    position: relative;
+    z-index: 10;
+    pointer-events: none;
+}
+
+/* Gooey Text Morphing Effect */
+.gooey-svg {
+    position: absolute; 
+    width: 0; 
+    height: 0;
+}
+
+.gooey-container {
+    position: relative;
+    width: 100%;
+}
+
+.gooey-text-wrapper {
+    position: relative;
+    height: clamp(2rem, 5vw, 5rem);
+    filter: url(#threshold);
+    display: flex;
+    align-items: center;
+}
+
+.gooey-span {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: clamp(1rem, 3vw, 3rem);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: #ffffff;
+    user-select: none;
+    white-space: nowrap;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .steps-grid { grid-template-columns: 1fr; gap: 1rem; }
+    .split-layout { grid-template-columns: 1fr; gap: 3rem; }
+    .floating-shape { transform: scale(0.7); }
+}
+@media (max-width: 768px) {
+    .nav-bar { padding: 1.5rem 5%; }
+    .slider-controls { display: none; }
+    .slide-content { padding: 0 5%; text-align: left; align-items: flex-start; }
+    .title-massive, .title-large, .title-medium { font-size: 12vw; }
+    .footer { flex-direction: column; gap: 1rem; }
+    .form-grid { grid-template-columns: 1fr; }
+}
